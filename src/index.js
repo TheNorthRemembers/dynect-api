@@ -23,9 +23,9 @@ export function getCurrentToken() {
   return token;
 }
 
-export async function loginDynect(): Promise<any> {
+export async function login(): Promise<any> {
   return new Promise((resolve, reject) => {   
-    return dynectRequest('/Session', 'POST', loginData).then((response) => {
+    return request('/Session', 'POST', loginData).then((response) => {
       if(response.data && response.data.data && response.data.data.token) {
         token = response.data.data.token;
         return resolve(true);
@@ -37,9 +37,36 @@ export async function loginDynect(): Promise<any> {
   });
 }
 
-export async function dynectRequest(path: string, method:string, data: any): Promise<any> {
+export async function getZones(): Promise<any> {
+  return new Promise((resolve, reject) => {   
+    return request('/Zone', 'GET', null).then((response) => {
+      if(response.data && response.data.data) {        
+        return resolve(response.data.data);
+      }
+      return reject(new Error('Could not get zones.'));
+    }).catch((err) => {
+      return reject(err);
+    });
+  }); 
+}
+
+export async function getZone(zonePath: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    const url = `${apiUrl}${path}`;
+    return request(zonePath, 'GET', null).then((response) => {
+      if(response.data && response.data.data) {        
+        return resolve(response.data.data);
+      }
+      return reject(new Error('Could not get zones.'));
+    }).catch((err) => {
+      return reject(err);
+    });
+  });
+}
+
+export async function request(path: string, method:string, data: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+
+    const url = `${apiUrl}${path.replace("/REST", "")}`;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -54,12 +81,3 @@ export async function dynectRequest(path: string, method:string, data: any): Pro
     });
   });
 }
-
-
-
-
-
-
-
-
-

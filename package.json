@@ -1,10 +1,14 @@
 {
   "name": "dynect-api",
-  "version": "1.0.6",
-  "description": "A barely fuctional Dynect DNS API Interface",
+  "version": "1.0.10",
+  "description": "A barely functional, yet servicable, Dynect Managed DNS REST API Interface",
+  "repository": {
+    "type": "git",
+    "url": "github:TheNorthRemembers/dynect-api"
+  },
   "main": "./dist/index.js",
   "scripts": {
-    "build": "babel source --presets babel-preset-es2015 --out-dir dist",
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist",
     "prepublish": "npm run build"
   },
   "dependencies": {
